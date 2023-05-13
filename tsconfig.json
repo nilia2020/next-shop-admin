@@ -18,9 +18,10 @@
     "paths": {
       "@componnets/*": ["components/*"],
       "@styles/*": ["styles/*"],
-      "@pages/*": ["pages/*"]
+      "@pages/*": ["pages/*"],
+      "@common/*": ["common/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/common/Modal.jsx", "src/components/Header.jsx"],
   "exclude": ["node_modules"]
 }

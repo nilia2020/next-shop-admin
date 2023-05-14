@@ -32,7 +32,7 @@ export default function Header() {
               <div className="flex items-center justify-between h-16">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <img className="w-8 h-8" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow" />
+                    <img className="w-8 h-8" src="https://tailwindui.com/img/logos/workflow-mark-green-400.svg" alt="Workflow" />
                   </div>
                   <div className="hidden md:block">
                     <div className="flex items-baseline ml-10 space-x-4">

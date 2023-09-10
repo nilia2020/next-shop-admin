@@ -21,9 +21,10 @@
       "@pages/*": ["pages/*"],
       "@common/*": ["common/*"],
       "@layout/*": ["layout/*"],
-      "@assets/*": ["assets/*"]
+      "@assets/*": ["assets/*"],
+      "@hooks/*": ["hooks/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/common/Modal.jsx", "src/components/Header.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/common/Modal.jsx", "src/components/Header.jsx", "src/components/LoginPage.jsx"],
   "exclude": ["node_modules"]
 }

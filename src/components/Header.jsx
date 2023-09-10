@@ -1,16 +1,12 @@
 import { Fragment } from 'react';
+import { useAuth } from '@hooks/useAuth';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
-const userData = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-};
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Productos', href: '/dashboard/products/', current: false },
-  { name: 'Ventas', href: '#', current: false },
+  { name: 'Dashboard', href: '/dashboard', current: true },
+  { name: 'Products', href: '/', current: false },
+  { name: 'Sales', href: '/', current: false },
 ];
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -23,6 +19,12 @@ function classNames(...classes) {
 }
 
 export default function Header() {
+  const auth = useAuth();
+  const userData = {
+    name: auth?.user?.name,
+    email: auth?.user?.email,
+    imageUrl: auth?.user?.avatar,
+  };
   return (
     <>
       <Disclosure as="nav" className="bg-gray-800">

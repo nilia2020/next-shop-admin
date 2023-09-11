@@ -1,15 +1,30 @@
-const people = [
-  {
-    name: 'Jane Cooper',
-    title: 'Regional Paradigm Technician',
-    department: 'Optimization',
-    role: 'Admin',
-    email: 'jane.cooper@example.com',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-  },
-];
+import endPoints from '@pages/api';
+import useFetch from '@hooks/useFetch';
+import Pagination from '@common/Pagination';
+import { useState } from 'react';
 
+interface Product {
+  id: number;
+  title: string;
+  description: string;
+  images: string[];
+  price: number;
+  category: {
+    id: number;
+    name: string;
+    image: string;
+  };
+  creationAt: Date;
+  updatedAt: Date;
+}
+
+const PRODUCT_LIMIT = 5;
+const PRODUCT_OFFSET = 0;
 export default function Dashboard() {
+  const [offset, setOffset] = useState(PRODUCT_OFFSET);
+  const products: Product[] = useFetch(endPoints.products.getProducts(PRODUCT_LIMIT, offset));
+  console.log(products);
+  const totalItems = useFetch(endPoints.products.getProducts(0, 0)).length;
   return (
     <>
       <div className="flex flex-col">
@@ -23,44 +38,50 @@ export default function Dashboard() {
                       Name
                     </th>
                     <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                      Title
+                      Category
                     </th>
                     <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                      Status
+                      Price
                     </th>
                     <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                      Role
+                      Id
                     </th>
-                    <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">Edit</span>
+                    <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase ">
+                      Edit
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase ">
+                      Delete
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {people.map((person) => (
-                    <tr key={person.email}>
+                  {products?.map((product) => (
+                    <tr key={`${product.id}-${product.creationAt}`}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 w-10 h-10">
-                            <img className="w-10 h-10 rounded-full" src={person.image} alt="" />
+                            <img className="w-10 h-10 rounded-full" src={product.images[0]} alt="" />
                           </div>
                           <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">{person.name}</div>
-                            <div className="text-sm text-gray-500">{person.email}</div>
+                            <div className="text-sm font-medium text-gray-900">{product.title}</div>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{person.title}</div>
-                        <div className="text-sm text-gray-500">{person.department}</div>
+                        <div className="text-sm text-gray-900">{product.category.name}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">Active</span>
+                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">{product.price}</span>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{person.role}</td>
-                      <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                      <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{product.id}</td>
+                      <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
                         <a href="#" className="text-indigo-600 hover:text-indigo-900">
                           Edit
+                        </a>
+                      </td>
+                      <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
+                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                          Delete
                         </a>
                       </td>
                     </tr>
@@ -70,6 +91,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
+        {totalItems > 0 && <Pagination setOffset={setOffset} productNumberLimit={PRODUCT_LIMIT} totalItems={totalItems} />}
       </div>
     </>
   );

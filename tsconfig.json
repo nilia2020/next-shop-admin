@@ -25,6 +25,6 @@
       "@hooks/*": ["hooks/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/common/Modal.jsx", "src/components/Header.jsx", "src/components/LoginPage.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/common/Modal.jsx", "src/components/Header.jsx", "src/components/LoginPage.jsx", "src/pages/dashboard/index.jsx"],
   "exclude": ["node_modules"]
 }

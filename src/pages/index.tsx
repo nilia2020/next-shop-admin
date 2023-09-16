@@ -5,9 +5,9 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 const navigation = [
-  { name: 'Dashboard', href: '/' },
-  { name: 'Product', href: '/' },
-  { name: 'Sales', href: '/' },
+  { name: 'Dashboard', href: '/dashboard' },
+  { name: 'Product', href: '/dashboard/products' },
+  { name: 'Sales', href: '/dashboard/sales' },
 ];
 
 export default function Home() {

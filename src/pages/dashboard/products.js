@@ -1,32 +1,38 @@
+import { useState } from 'react';
+import Pagination from '@common/Pagination';
 import endPoints from '@pages/api';
 import useFetch from '@hooks/useFetch';
-import Pagination from '@common/Pagination';
-import { useState } from 'react';
-
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  images: string[];
-  price: number;
-  category: {
-    id: number;
-    name: string;
-    image: string;
-  };
-  creationAt: Date;
-  updatedAt: Date;
-}
+import Modal from '@common/Modal';
+import FormProduct from '../../components/FormProduct';
 
 const PRODUCT_LIMIT = 5;
 const PRODUCT_OFFSET = 0;
-export default function Dashboard() {
+export default function products() {
+  const [products, setProducts] = useState([]);
   const [offset, setOffset] = useState(PRODUCT_OFFSET);
-  const products: Product[] = useFetch(endPoints.products.getProducts(PRODUCT_LIMIT, offset));
-  console.log(products);
   const totalItems = useFetch(endPoints.products.getProducts(0, 0)).length;
+  const [open, setOpen] = useState(false);
   return (
     <>
+      <div className="mb-8 lg:flex lg:items-center lg:justify-between">
+        <div className="flex-1 min-w-0">
+          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">List of products</h2>
+        </div>
+        <div className="flex mt-5 lg:ml-4 lg:mt-0">
+          <span className="sm:ml-3">
+            <button
+              type="button"
+              className="inline-flex items-center py-2 pr-3 text-sm font-semibold text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              onClick={() => setOpen(true)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" className="w-5 h-5 mx-2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+              Add Product
+            </button>
+          </span>
+        </div>
+      </div>
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -93,6 +99,9 @@ export default function Dashboard() {
         </div>
         {totalItems > 0 && <Pagination setOffset={setOffset} productNumberLimit={PRODUCT_LIMIT} totalItems={totalItems} />}
       </div>
+      <Modal open={open} setOpen={setOpen}>
+        <FormProduct />
+      </Modal>
     </>
   );
 }

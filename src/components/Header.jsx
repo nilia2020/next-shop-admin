@@ -4,8 +4,8 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', current: true },
-  { name: 'Products', href: '/', current: false },
-  { name: 'Sales', href: '/', current: false },
+  { name: 'Products', href: '/dashboard/products', current: false },
+  { name: 'Sales', href: '/dashboard/sales', current: false },
 ];
 const userNavigation = [
   { name: 'Your Profile', href: '#' },

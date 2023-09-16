@@ -1,6 +1,5 @@
 import { Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { XCircleIcon } from '@heroicons/react/24/solid';
 
 export default function Modal({ open, setOpen, children }) {
   const cancelButtonRef = useRef(null);
@@ -24,8 +23,10 @@ export default function Modal({ open, setOpen, children }) {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <div className="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
-                <XCircleIcon className="flex-shrink-0 w-6 h-6 text-gray-400 cursor-pointer" aria-hidden="true" onClick={() => setOpen(false)} ref={cancelButtonRef} />
+              <div className="px-4 py-3 cursor-pointer bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6" onClick={() => setOpen(false)}>
+                  <path strokeLinecap="round" strokeLinejoin="round" ref={cancelButtonRef} d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
               </div>
               <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">{children}</div>

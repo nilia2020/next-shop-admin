@@ -1,8 +1,10 @@
 import { useRef } from 'react';
+import { useRouter } from 'next/router';
+import { addProduct, updateProduct } from '../pages/api/products';
 
-export default function FormProduct() {
+export default function FormProduct({ setOpen, setAlert, product }) {
   const formRef = useRef(null);
-
+  const router = useRouter();
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(formRef.current);
@@ -11,9 +13,32 @@ export default function FormProduct() {
       price: parseInt(formData.get('price')),
       description: formData.get('description'),
       categoryId: parseInt(formData.get('category')),
-      images: [formData.get('images').name],
+      images: ['https://picsum.photos/640/640?r=7761'],
     };
-    console.log(data);
+    if (product) {
+      updateProduct(product.id, data).then(() => {
+        router.push('/dashboard/products/');
+      });
+    } else {
+      addProduct(data)
+        .then(() => {
+          setAlert({
+            active: true,
+            message: 'Product added successfully',
+            type: 'success',
+            autoClose: false,
+          });
+          setOpen(false);
+        })
+        .catch((error) => {
+          setAlert({
+            active: true,
+            message: error.message,
+            type: 'error',
+            autoClose: false,
+          });
+        });
+    }
   };
   return (
     <form ref={formRef} onSubmit={handleSubmit}>
@@ -24,13 +49,25 @@ export default function FormProduct() {
               <label htmlFor="title" className="block text-sm font-medium text-gray-700">
                 Title
               </label>
-              <input type="text" name="title" id="title" className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+              <input
+                type="text"
+                name="title"
+                id="title"
+                defaultValue={product?.title}
+                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
             </div>
             <div className="col-span-6 sm:col-span-3">
               <label htmlFor="price" className="block text-sm font-medium text-gray-700">
                 Price
               </label>
-              <input type="number" name="price" id="price" className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+              <input
+                type="number"
+                name="price"
+                id="price"
+                defaultValue={product?.price}
+                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
             </div>
             <div className="col-span-6">
               <label htmlFor="category" className="block text-sm font-medium text-gray-700">
@@ -41,11 +78,12 @@ export default function FormProduct() {
                 name="category"
                 autoComplete="category-name"
                 className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                defaultValue={product?.categoryId}
               >
                 <option value="1">Clothes</option>
                 <option value="2">Electronics</option>
                 <option value="3">Furniture</option>
-                <option value="4">Toys</option>
+                <option value="4">Shoes</option>
                 <option value="5">Others</option>
               </select>
             </div>
@@ -55,6 +93,7 @@ export default function FormProduct() {
                 Description
               </label>
               <textarea
+                defaultValue={product?.description}
                 name="description"
                 id="description"
                 autoComplete="description"
@@ -81,7 +120,7 @@ export default function FormProduct() {
                         className="relative font-medium text-blue-600 bg-white rounded-md cursor-pointer hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
                       >
                         <span>Upload a file</span>
-                        <input id="images" name="images" type="file" className="sr-only" />
+                        <input id="images" name="images" type="file" className="sr-only" defaultValue={product?.images} />
                       </label>
                       <p className="pl-1">or drag and drop</p>
                     </div>

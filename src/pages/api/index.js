@@ -8,11 +8,12 @@ const endPoints = {
   },
   products: {
     getProduct: (id) => `${API}/api/${VERSION}/products/${id}`,
+    getProductsList: `${API}/api/${VERSION}/products/`,
     //Tomar en cuenta que para agregar producto la url necesita de dos entradas: limit y offset
     getProducts: (limit, offset) => `${API}/api/${VERSION}/products?limit=${limit}&offset=${offset}`,
-    addProducts: `${API}/api/${VERSION}/products`,
+    addProduct: `${API}/api/${VERSION}/products`,
     updateProducts: (id) => `${API}/api/${VERSION}/products/${id}/`,
-    deleteProducts: (id) => `${API}/api/${VERSION}/products/${id}/`,
+    deleteProduct: (id) => `${API}/api/${VERSION}/products/${id}/`,
   },
   categories: {
     getCategoriesList: `${API}/api/${VERSION}/categories/`,

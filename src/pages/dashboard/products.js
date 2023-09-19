@@ -1,19 +1,44 @@
-import { useState } from 'react';
-import Pagination from '@common/Pagination';
+import { useEffect, useState } from 'react';
 import endPoints from '@pages/api';
-import useFetch from '@hooks/useFetch';
 import Modal from '@common/Modal';
 import FormProduct from '../../components/FormProduct';
+import axios from 'axios';
+import useAlert from '@hooks/useAlert';
+import Alert from '@common/Alert';
+import { deleteProduct } from '../api/products';
+import Link from 'next/link';
 
-const PRODUCT_LIMIT = 5;
-const PRODUCT_OFFSET = 0;
-export default function products() {
+export default function Products() {
   const [products, setProducts] = useState([]);
-  const [offset, setOffset] = useState(PRODUCT_OFFSET);
-  const totalItems = useFetch(endPoints.products.getProducts(0, 0)).length;
   const [open, setOpen] = useState(false);
+  const { alert, toggleAlert, setAlert } = useAlert();
+
+  useEffect(() => {
+    async function getProducts() {
+      const response = await axios.get(endPoints.products.getProductsList);
+      setProducts(response.data);
+    }
+    try {
+      getProducts();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [alert]);
+
+  const handleDelete = (id) => {
+    deleteProduct(id).then((res) => {
+      setAlert({
+        active: true,
+        type: 'error',
+        message: 'Delete product successfully',
+        autoClose: false,
+      });
+    });
+  };
+
   return (
     <>
+      <Alert alert={alert} handleClose={toggleAlert} />
       <div className="mb-8 lg:flex lg:items-center lg:justify-between">
         <div className="flex-1 min-w-0">
           <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">List of products</h2>
@@ -25,7 +50,7 @@ export default function products() {
               className="inline-flex items-center py-2 pr-3 text-sm font-semibold text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
               onClick={() => setOpen(true)}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" className="w-5 h-5 mx-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-5 h-5 mx-2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
               </svg>
               Add Product
@@ -55,7 +80,7 @@ export default function products() {
                     <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase ">
                       Edit
                     </th>
-                    <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase ">
+                    <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-center text-gray-500 uppercase ">
                       Delete
                     </th>
                   </tr>
@@ -81,14 +106,22 @@ export default function products() {
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{product.id}</td>
                       <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                        <Link href={`/dashboard/edit/${product.id}`} className="text-blue-600 hover:text-blue-900">
                           Edit
-                        </a>
+                        </Link>
                       </td>
-                      <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          Delete
-                        </a>
+                      <td className="flex justify-center px-6 py-6 text-sm font-medium whitespace-nowrap">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="flex-shrink-0 w-6 h-6 text-red-700 cursor-pointer"
+                          onClick={() => handleDelete(product.id)}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                       </td>
                     </tr>
                   ))}
@@ -97,10 +130,9 @@ export default function products() {
             </div>
           </div>
         </div>
-        {totalItems > 0 && <Pagination setOffset={setOffset} productNumberLimit={PRODUCT_LIMIT} totalItems={totalItems} />}
       </div>
       <Modal open={open} setOpen={setOpen}>
-        <FormProduct />
+        <FormProduct setOpen={setOpen} setAlert={setAlert} />
       </Modal>
     </>
   );

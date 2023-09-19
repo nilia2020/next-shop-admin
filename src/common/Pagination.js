@@ -19,7 +19,7 @@ const Pagination = ({ setOffset, productNumberLimit, totalItems }) => {
   //Se irá agregando al array los botones que aparecerán en el reglón de páginas
   for (let i = initial; i < final; i++) {
     itemsArray.push(
-      <a
+      <button
         key={`Page-${i}`}
         onClick={() => {
           setCurrent(i);
@@ -31,7 +31,7 @@ const Pagination = ({ setOffset, productNumberLimit, totalItems }) => {
                     relative inline-flex items-center px-4 py-2 border text-sm font-medium`}
       >
         {i}
-      </a>
+      </button>
     );
   }
 
@@ -78,23 +78,23 @@ const Pagination = ({ setOffset, productNumberLimit, totalItems }) => {
         </div>
         <div>
           <nav className="relative z-0 inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-            <a onClick={startButton} href="#" className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 rounded-l-md">
+            <button onClick={startButton} className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 rounded-l-md">
               <span className="sr-only">Start</span>
               <ChevronDoubleLeftIcon className="w-5 h-5" aria-hidden="true" />
-            </a>
-            <a onClick={prevButton} href="#" className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 rounded-l-md">
+            </button>
+            <button onClick={prevButton} className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 rounded-l-md">
               <span className="sr-only">Previous</span>
               <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" />
-            </a>
+            </button>
             {itemsArray}
-            <a onClick={nextButton} href="#" className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50">
+            <button onClick={nextButton} className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50">
               <span className="sr-only">Next</span>
               <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
-            </a>
-            <a onClick={endButton} href="#" className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50">
+            </button>
+            <button onClick={endButton} className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50">
               <span className="sr-only">End</span>
               <ChevronDoubleRightIcon className="w-5 h-5" aria-hidden="true" />
-            </a>
+            </button>
           </nav>
         </div>
       </div>

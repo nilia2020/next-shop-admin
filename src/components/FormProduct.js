@@ -103,7 +103,7 @@ export default function FormProduct({ setOpen, setAlert, product }) {
             </div>
             <div className="col-span-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Cover photo</label>
+                <p className="block text-sm font-medium text-gray-700">Cover photo</p>
                 <div className="flex justify-center h-48 px-6 py-8 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                   <div className="space-y-1 text-center">
                     <svg className="w-12 h-12 mx-auto text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">

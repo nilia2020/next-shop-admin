@@ -13,21 +13,7 @@ export default function Home() {
   return (
     <div>
       <header className="absolute inset-x-0 top-0 z-50">
-        <nav className="flex items-center justify-between p-6 bg-gray-800 lg:px-8" aria-label="Global">
-          <div className="flex lg:flex-1">
-            <button className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <Image className="w-auto h-8" src="https://tailwindui.com/img/logos/mark.svg?color=blue&shade=600" alt="" />
-            </button>
-          </div>
-          <div className="flex lg:hidden">
-            <button type="button" className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" onClick={() => setMobileMenuOpen(true)}>
-              <span className="sr-only">Open main menu</span>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-              </svg>
-            </button>
-          </div>
+        <nav className="flex justify-center p-6 bg-gray-800 lg:px-8" aria-label="Global">
           <div className="hidden lg:flex lg:gap-x-12">
             {navigation.map((item) => (
               <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-white">
@@ -47,7 +33,7 @@ export default function Home() {
             <div className="flex items-center justify-between">
               <button className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
-                <Image className="w-auto h-8" src="https://tailwindui.com/img/logos/mark.svg?color=blue&shade=600" alt="" />
+                <Image className="w-auto h-8" height={32} src="https://tailwindui.com/img/logos/mark.svg?color=blue&shade=600" alt="" />
               </button>
               <button type="button" className="-m-2.5 rounded-md p-2.5 text-gray-700" onClick={() => setMobileMenuOpen(false)}>
                 <span className="sr-only">Close menu</span>

@@ -3,6 +3,7 @@ import useFetch from '@hooks/useFetch';
 import Pagination from '@common/Pagination';
 import { useState } from 'react';
 import { Chart } from '@common/Chart';
+import Image from 'next/image';
 
 const PRODUCT_LIMIT = 6;
 const PRODUCT_OFFSET = 0;
@@ -77,14 +78,14 @@ export default function Dashboard() {
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{product.id}</td>
                       <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                        <button href="#" className="text-indigo-600 hover:text-indigo-900">
                           Edit
-                        </a>
+                        </button>
                       </td>
                       <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                        <button href="#" className="text-indigo-600 hover:text-indigo-900">
                           Delete
-                        </a>
+                        </button>
                       </td>
                     </tr>
                   ))}
